@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\frontEndController;
 use App\Http\Controllers\categoryController;
+use App\Http\Controllers\subCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,8 @@ Route::post('/category/mark/delete', [App\Http\Controllers\categoryController::c
 Route::get('/category/edit/{category_id}', [App\Http\Controllers\categoryController::class, 'category_edit'])->name('category_edit');
 Route::post('/category/update', [App\Http\Controllers\categoryController::class, 'category_update'])->name('category_update');
 // Sub-Category Routes Start
+Route::get('/subCategory/add', [App\Http\Controllers\subCategoryController::class, 'subCategory_add'])->name('subCategory_add');
+Route::post('/subCategory/store', [App\Http\Controllers\subCategoryController::class, 'subCategory_store'])->name('subCategory_store');
 
 
 // Dashboard Routes End ##########################

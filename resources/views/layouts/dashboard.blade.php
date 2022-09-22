@@ -438,7 +438,7 @@
                             <div class="collapse" id="sub-category">
                                 <ul class="nav-second-level">
                                     <li>
-                                        <a href="#">Add Sub-Category</a>
+                                        <a href="{{ route('subCategory_add') }}">Add Sub-Category</a>
                                     </li>
                                     <li>
                                         <a href="email-templates.html">View Sub-Category</a>
