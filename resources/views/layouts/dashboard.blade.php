@@ -441,7 +441,7 @@
                                         <a href="{{ route('subCategory_add') }}">Add Sub-Category</a>
                                     </li>
                                     <li>
-                                        <a href="email-templates.html">View Sub-Category</a>
+                                        <a href="{{ route('subCategory_list') }}">View Sub-Category</a>
                                     </li>
                                 </ul>
                             </div>
@@ -514,7 +514,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('category_trash') }}">
+                            <a href="{{ route('subcategory_trash') }}">
                                 <i class="mdi mdi-table"></i>
                                 <span>Trashed Category's</span>
                             </a>

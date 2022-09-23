@@ -13,7 +13,7 @@
                     <form action="{{ route('category_delete_mark') }}" method="POST">
                     @csrf
                         <div class="card-header">
-                            Category List <button id="marked_btn" class="btn btn-danger float-end hide" type="submit">Delete Marked</button>
+                            Sub-Category List <button id="marked_btn" class="btn btn-danger float-end hide" type="submit">Delete Marked</button>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered">
@@ -22,24 +22,22 @@
                                         <td>Mark All <input id="checkall" type="checkbox"></td>
                                         <td>SL.</td>
                                         <td>Category Name</td>
-                                        <td>Category Icon</td>
-                                        <td>Category Image</td>
+                                        <td>Sub-Category Name</td>
                                         <td>deleted at</td>
                                         <td>Action</td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($categories as $index => $category)
+                                    @forelse ($subcategories as $index => $subcategory)
                                         <tr>
-                                            <td><input id="mark" class="mark" value="{{ $category->id }}" type="checkbox" name="mark[]"></td>
+                                            <td><input id="mark" class="mark" value="{{ $subcategory->id }}" type="checkbox" name="mark[]"></td>
                                             <td>{{ $index+1 }}</td>
-                                            <td>{{ $category->category_name }}</td>
-                                            <td><i class="{{ $category->category_icon }}"></i></td>
-                                            <td><img width="20" height="20" src="{{ asset('/frontend/assets/img/categories') }}/{{ $category->category_image }}" alt="{{ $category->category_image }}"></td>
-                                            <td>{{ $category->deleted_at->format('Y-M-d') }}</td>
+                                            <td>{{ $subcategory->rel_to_category->category_name }}</td>
+                                            <td>{{ $subcategory->subcategory_name }}</td>
+                                            <td>{{ $subcategory->deleted_at->format('Y-M-d') }}</td>
                                             <td>
-                                                <a class="btn btn-success" href="{{ route('category_restore', $category->id) }}"><i class="fa-solid fa-trash-can-arrow-up"></i></a>
-                                                <a class="btn btn-danger" href="{{ route('category_delete', $category->id) }}"><i class="fab fa-x"></i></a>
+                                                <a class="btn btn-success" href="{{ route('category_restore', $subcategory->id) }}"><i class="fa-solid fa-trash-can-arrow-up"></i></a>
+                                                <a class="btn btn-danger" href="{{ route('category_delete', $subcategory->id) }}"><i class="fab fa-x"></i></a>
                                             </td>
                                         </tr>
                                     @empty

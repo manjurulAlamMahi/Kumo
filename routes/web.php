@@ -36,9 +36,13 @@ Route::get('/category/delete/{category_id}', [App\Http\Controllers\categoryContr
 Route::post('/category/mark/delete', [App\Http\Controllers\categoryController::class, 'category_delete_mark'])->name('category_delete_mark');
 Route::get('/category/edit/{category_id}', [App\Http\Controllers\categoryController::class, 'category_edit'])->name('category_edit');
 Route::post('/category/update', [App\Http\Controllers\categoryController::class, 'category_update'])->name('category_update');
+
 // Sub-Category Routes Start
 Route::get('/subCategory/add', [App\Http\Controllers\subCategoryController::class, 'subCategory_add'])->name('subCategory_add');
 Route::post('/subCategory/store', [App\Http\Controllers\subCategoryController::class, 'subCategory_store'])->name('subCategory_store');
+Route::get('/subCategory/view/list', [App\Http\Controllers\subCategoryController::class, 'subCategory_list'])->name('subCategory_list');
+Route::get('/subcategory/soft/delete/{subcategory_id}', [App\Http\Controllers\subCategoryController::class, 'subcategory_soft_delete'])->name('subcategory_soft_delete');
+Route::get('/subcategory/trashed', [App\Http\Controllers\subCategoryController::class, 'subcategory_trash'])->name('subcategory_trash');
 
 
 // Dashboard Routes End ##########################

@@ -18,6 +18,7 @@ class CreateSubcategoriesTable extends Migration
             $table->integer('category_id');
             $table->string('subcategory_name');
             $table->integer('created_by');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

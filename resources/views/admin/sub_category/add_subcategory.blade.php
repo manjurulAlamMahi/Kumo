@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">
                         ADD SUB-CATEGORY
-                        <a class="btn btn-primary float-end" href="{{ route('category_view') }}"><i class="fas fa-list"></i> View SUB-CATEGORY</a>
+                        <a class="btn btn-primary float-end" href="{{ route('subCategory_list') }}"><i class="fas fa-list"></i> View SUB-CATEGORY</a>
                     </div>
                     <form action="{{ route('subCategory_store') }}" method="POST">
                     @csrf
