@@ -10,10 +10,10 @@
                             display: none;
                         }
                     </style>
-                    <form action="{{ route('category_delete_mark') }}" method="POST">
+                    <form action="{{ route('subcategory_delete_mark') }}" method="POST">
                     @csrf
                         <div class="card-header">
-                            Sub-Category List <button id="marked_btn" class="btn btn-danger float-end hide" type="submit">Delete Marked</button>
+                            Sub-Category Trashed List <button id="marked_btn" class="btn btn-danger float-end hide" type="submit">Delete Marked</button>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered">
@@ -36,8 +36,8 @@
                                             <td>{{ $subcategory->subcategory_name }}</td>
                                             <td>{{ $subcategory->deleted_at->format('Y-M-d') }}</td>
                                             <td>
-                                                <a class="btn btn-success" href="{{ route('category_restore', $subcategory->id) }}"><i class="fa-solid fa-trash-can-arrow-up"></i></a>
-                                                <a class="btn btn-danger" href="{{ route('category_delete', $subcategory->id) }}"><i class="fab fa-x"></i></a>
+                                                <a class="btn btn-success" href="{{ route('subcategory_restore', $subcategory->id) }}"><i class="fa-solid fa-trash-can-arrow-up"></i></a>
+                                                <a class="btn btn-danger" href="{{ route('subcategory_delete', $subcategory->id) }}"><i class="fab fa-x"></i></a>
                                             </td>
                                         </tr>
                                     @empty

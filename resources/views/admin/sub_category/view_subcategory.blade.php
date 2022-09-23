@@ -44,7 +44,7 @@
                                         <td>{{ $subcategory->rel_to_user->name }}</td>
                                         <td>{{ $subcategory->created_at->format('Y-M-d') }}</td>
                                         <td>
-                                            <a class="btn btn-info" href="{{ route('category_edit', $subcategory->id) }}"><i class="fa-solid fa-pencil"></i></a>
+                                            <a class="btn btn-info" href="{{ route('subcategory_edit', $subcategory->id) }}"><i class="fa-solid fa-pencil"></i></a>
                                             <a class="btn btn-danger" href="{{ route('subcategory_soft_delete', $subcategory->id) }}"><i class="fa-solid fa-trash"></i></a>
                                         </td>
                                     </tr>

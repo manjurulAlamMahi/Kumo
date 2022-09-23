@@ -71,23 +71,61 @@ class subCategoryController extends Controller
     }
 
     // Restore Category
-    function category_restore($category_id)
+    function subcategory_restore($subcategory_id)
     {
-        category::onlyTrashed()->find($category_id)->restore();
+        subcategory::onlyTrashed()->find($subcategory_id)->restore();
 
-        return back()->with('restore', 'Category has been restored!');
+        return back()->with('restore', 'Sub-category has been restored!');
     }
 
     // Permanent Delete Category
-    function category_delete($category_id)
+    function subcategory_delete($subcategory_id)
     {
-        $catgories = category::onlyTrashed()->find($category_id);
-        $image_name = $catgories->category_image;
-        $delete_previous_image_from = public_path('/frontend/assets/img/categories/').$image_name;
-        unlink($delete_previous_image_from);
+        subcategory::onlyTrashed()->find($subcategory_id)->forceDelete();
 
-        $catgories->forceDelete();
+        return back()->with('delete', 'Sub-category has deleted permanently!');
+    }
 
-        return back()->with('delete', 'Category has deleted permanently!');
+    // Permanent Delete Category
+    function subcategory_delete_mark(Request $request)
+    {
+        foreach($request->mark as $mark)
+        {
+            subcategory::onlyTrashed()->find($mark)->forceDelete();
+        }
+        return back()->with('delete', 'Sub-Category has deleted permanently!');
+    }
+
+    // View Edit Subcategory Page 
+    function subcategory_edit($subcategory_id)
+    {
+        $subcategoires = subcategory::find($subcategory_id);
+        $categories = category::all();
+        return view('admin.sub_category.edit_subcategory',[
+            'categories' => $categories,
+            'subcategoires' => $subcategoires,
+        ]);
+    }
+
+    // Update Subcategory
+    function subcategory_update(Request $request)
+    {
+        $request->validate([
+            'category_id' => 'required',
+            'subcategory_name' => 'required',
+        ],
+        [
+            'category_id.required' => 'The Category name field is required.',
+            'subcategory_name.required' => 'The Sub-Category name field is required.',
+        ]
+        );
+
+        subcategory::find($request->subcategory_id)->update([
+            'category_id' => $request->category_id,
+            'subcategory_name' => $request->subcategory_name,
+            'updated_at' => Carbon::now(),
+        ]);
+
+        return back()->with('success', 'Sub-Category Updated Successfully');
     }
 }

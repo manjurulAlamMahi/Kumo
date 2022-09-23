@@ -11,6 +11,8 @@ class subcategory extends Model
     use HasFactory;
     use SoftDeletes;
 
+    protected $guarded = ['id'];
+
     function rel_to_category()
     {
         return $this->belongsTo(category::class, 'category_id');

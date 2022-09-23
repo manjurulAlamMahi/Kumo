@@ -13,7 +13,7 @@
                     <form action="{{ route('category_delete_mark') }}" method="POST">
                     @csrf
                         <div class="card-header">
-                            Category List <button id="marked_btn" class="btn btn-danger float-end hide" type="submit">Delete Marked</button>
+                            Category Trashed List <button id="marked_btn" class="btn btn-danger float-end hide" type="submit">Delete Marked</button>
                         </div>
                         <div class="card-body">
                             <table class="table table-bordered">

@@ -514,14 +514,14 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('subcategory_trash') }}">
+                            <a href="{{ route('category_trash') }}">
                                 <i class="mdi mdi-table"></i>
                                 <span>Trashed Category's</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="apps-chat.html">
+                            <a href="{{ route('subcategory_trash') }}">
                                 <i class="mdi mdi-table"></i>
                                 <span>Trashed Sub-Category's</span>
                             </a>
