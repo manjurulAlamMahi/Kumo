@@ -11,13 +11,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('/dashboard/assets/images/favicon.ico') }}">
-
     <!-- App css -->
-
     <link href="{{ asset('/dashboard/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
-
     <!-- icons -->
     <link href="{{ asset('/dashboard/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    {{-- SummerNote --}}
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 </head>
 
 <!-- body start -->
@@ -451,7 +450,7 @@
 
                         {{-- Side Menu Title --}}
                         <li>
-                            <a href="apps-chat.html">
+                            <a href="">
                                 <i class="mdi mdi-layers-outline"></i>
                                 <span>Product's List</span>
                             </a>
@@ -463,7 +462,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="apps-chat.html">
+                            <a href="{{ route('product_add') }}">
                                 <i class="mdi mdi-layers-outline"></i>
                                 <span>Add Product</span>
                             </a>
@@ -715,6 +714,7 @@
     <script src="{{ asset('/dashboard/assets/libs/feather-icons/feather.min.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://kit.fontawesome.com/2023654590.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
     <!-- App js -->
     <script src="{{ asset('dashboard/assets/js/app.min.js') }}"></script>

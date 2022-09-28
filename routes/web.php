@@ -48,6 +48,9 @@ Route::get('/subcategory/restore/{subcategory_id}', [App\Http\Controllers\subCat
 Route::get('/subcategory/delete/{subcategory_id}', [App\Http\Controllers\subCategoryController::class, 'subcategory_delete'])->name('subcategory_delete');
 Route::post('/subcategory/mark/delete', [App\Http\Controllers\subCategoryController::class, 'subcategory_delete_mark'])->name('subcategory_delete_mark');
 
+// Products Routes Start
+Route::get('/product/add', [App\Http\Controllers\productController::class, 'product_add'])->name('product_add');
+
 
 // Dashboard Routes End ##########################
 

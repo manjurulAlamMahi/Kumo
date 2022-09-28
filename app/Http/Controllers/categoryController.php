@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\category;
+use App\Models\subcategory;
 use Illuminate\Support\Facades\Auth;
 use Image;
 use Illuminate\Support\Carbon;
@@ -57,9 +58,16 @@ class categoryController extends Controller
     // Trash Category
     function category_soft_delete($category_id)
     {
+        
+        $subcategory = subcategory::where('category_id' , $category_id)->get();
+
+        foreach($subcategory as $sub)
+        {
+            subcategory::find($sub->id)->delete();
+        }
         category::find($category_id)->delete();
 
-        return back()->with('soft_delete', 'Category has been moved to trash!');
+        return back()->with('soft_delete', 'Category Moved To Trashed');
     }
 
     // View Trashed List
@@ -75,6 +83,13 @@ class categoryController extends Controller
     // Restore Category
     function category_restore($category_id)
     {
+        $subcategory = subcategory::onlyTrashed()->where('category_id' , $category_id)->get();
+
+        foreach($subcategory as $sub)
+        {
+            subcategory::onlyTrashed()->find($sub->id)->restore();
+        }
+
         category::onlyTrashed()->find($category_id)->restore();
 
         return back()->with('restore', 'Category has been restored!');
@@ -88,6 +103,13 @@ class categoryController extends Controller
         $delete_previous_image_from = public_path('/frontend/assets/img/categories/').$image_name;
         unlink($delete_previous_image_from);
 
+        $subcategory = subcategory::onlyTrashed()->where('category_id' , $category_id)->get();
+
+        foreach($subcategory as $sub)
+        {
+            subcategory::onlyTrashed()->find($sub->id)->forceDelete();
+        }
+
         $catgories->forceDelete();
 
         return back()->with('delete', 'Category has deleted permanently!');
@@ -96,6 +118,13 @@ class categoryController extends Controller
     // Marked Permanent Delete Category
     function category_delete_mark(Request $request)
     {
+        $subcategory = subcategory::onlyTrashed()->where('category_id' , $category_id)->get();
+
+        foreach($subcategory as $sub)
+        {
+            subcategory::onlyTrashed()->find($sub->id)->forceDelete();
+        }
+        
         foreach($request->mark as $mark)
         {
             $catgories = category::onlyTrashed()->find($mark);
@@ -105,6 +134,7 @@ class categoryController extends Controller
 
             $catgories->forceDelete();
         }
+        
         return back()->with('delete', 'Category has deleted permanently!');
     }
 

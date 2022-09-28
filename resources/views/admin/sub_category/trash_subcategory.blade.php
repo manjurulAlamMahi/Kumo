@@ -32,7 +32,7 @@
                                         <tr>
                                             <td><input id="mark" class="mark" value="{{ $subcategory->id }}" type="checkbox" name="mark[]"></td>
                                             <td>{{ $index+1 }}</td>
-                                            <td>{{ $subcategory->rel_to_category->category_name }}</td>
+                                            <td>{{ App\Models\category::onlyTrashed()->find($subcategory->category_id)->category_name }}</td>
                                             <td>{{ $subcategory->subcategory_name }}</td>
                                             <td>{{ $subcategory->deleted_at->format('Y-M-d') }}</td>
                                             <td>
