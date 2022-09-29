@@ -50,7 +50,8 @@ Route::post('/subcategory/mark/delete', [App\Http\Controllers\subCategoryControl
 
 // Products Routes Start
 Route::get('/product/add', [App\Http\Controllers\productController::class, 'product_add'])->name('product_add');
-
+Route::post('/getsubcategory', [App\Http\Controllers\productController::class, 'getsubcategory'])->name('getsubcategory');
+Route::post('/product/store', [App\Http\Controllers\productController::class, 'product_store'])->name('product_store');
 
 // Dashboard Routes End ##########################
 

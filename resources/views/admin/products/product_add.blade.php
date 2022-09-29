@@ -9,82 +9,116 @@
                 <div class="card-header">
                     ADD PRODUCTS
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Product Category*</label>
-                                <select class="form-control" name="" id="">
-                                    <option value="">-- Select Category --</option>
-                                </select>
+                <form action="{{ route('product_store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                    <div class="card-body">
+                        <div class="row">
+                            {{-- Category --}}
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Product Category*</label>
+                                    <select class="form-control" name="category_id" id="category_id">
+                                        <option value="">-- Select Category --</option>
+                                        @foreach ($catrgories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('category_id')
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Product Sub-Category</label>
-                                <select class="form-control" name="" id="">
-                                    <option value="">-- Select Sub-Category --</option>
-                                </select>
+                            {{-- Sub-Category --}}
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Product Sub-Category</label>
+                                    <select id="subcategory_list" class="form-control" name="" id="">
+                                        <option value="">-- Select Sub-Category --</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Product Name*</label>
-                                <input type="text" class="form-control">
+                            {{-- Product Name --}}
+                            <div class="col-lg-3">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Product Name*</label>
+                                    <input type="text" class="form-control" name="product_name" placeholder="Product Title">
+                                    @error('product_name')
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Product Price*</label>
-                                <input type="text" class="form-control">
+                            {{-- Product Price --}}
+                            <div class="col-lg-3">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Product Price*</label>
+                                    <input id="product_price" type="text" class="form-control" name="product_price" placeholder="Price">
+                                    @error('product_price')
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Product Discount</label>
-                                <input type="text" class="form-control">
+                            {{-- Product Discount --}}
+                            <div class="col-lg-3">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Product Discount</label>
+                                    <input id="product_discount" type="text" class="form-control" placeholder="0%">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Discount Price*</label>
-                                <input type="text" class="form-control">
+                            {{-- Discount Price --}}
+                            <div class="col-lg-3">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Discount Price</label>
+                                    <input readonly id="discount_price" type="text" class="form-control">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Short Description*</label>
-                                <textarea style="resize: none;" class="form-control" name="" id="" cols="5" rows="3"></textarea>
+                            {{-- Short Desp --}}
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Short Description*</label>
+                                    <textarea placeholder="Write short desciption about product in 100 words!" style="resize: none;" class="form-control" name="short_desp" cols="5" rows="3"></textarea>
+                                    @error('short_desp')
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-                        <style>
-                            #long_desp .note-editor .note-editing-area .note-editable{
-                                height: 150px;
-                            }
-                        </style>
-                        <div class="col-lg-12">
-                            <div class="mb-3" id="long_desp">
-                                <label for="" class="form-label">Long Description</label>
-                                <textarea cols="5" rows="3" id="summernote"></textarea>
+                            {{-- Long Desp --}}
+                            <style>
+                                #long_desp .note-editor .note-editing-area .note-editable{
+                                    height: 150px;
+                                }
+                            </style>
+                            <div class="col-lg-12">
+                                <div class="mb-3" id="long_desp">
+                                    <label for="" class="form-label">Long Description</label>
+                                    <textarea cols="5" rows="3" id="summernote" name="long_desp"></textarea>
+                                    @error('long_desp')
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Product Image*</label>
-                                <input type="file" class="form-control">
+                            {{-- Product Preview --}}
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Product Preview*</label>
+                                    <input type="file" class="form-control" name="product_preview">
+                                    @error('product_preview')
+                                        <strong class="text-danger">{{ $message }}</strong>
+                                    @enderror
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Product Image Thumbnails <span class="text-primary">(Only 4 Thumbnail Can be Added)</span></label>
-                                <input type="file" class="form-control">
+                            {{-- Product Thumbnail --}}
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Product Image Thumbnails <span class="text-primary">(Only 4 Thumbnail Can be Added)</span></label>
+                                    <input type="file" class="form-control">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer text-center">
-                    <button class="btn btn-primary">SUBMIT</button>
-                </div>
+                    <div class="card-footer text-center">
+                        <button class="btn btn-primary">SUBMIT</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -94,8 +128,55 @@
 
 @section('footer_script')
 <script>
+    // Summer Note
     $(document).ready(function() {
         $('#summernote').summernote();
     });
+    // Caluculate Dicount Price Start
+    $('#product_price').on('keyup',function(){
+        discountprice();
+    });
+    $('#product_discount').on('keyup',function(){
+        discountprice();
+    });
+    
+    function discountprice(){
+        var price = $('#product_price').val();
+        var discount = $('#product_discount').val();
+        var discount_price = price - (price * discount/100);
+        
+        if(price != '' && discount != ''){
+            $('#discount_price').val(Math.round(discount_price));
+        }
+        else{
+            $('#discount_price').val('No Discount');
+        }
+    }
+    // Caluculate Dicount Price End
+    
+    // Ajax
+
+    $('#category_id').change(function(){
+        category_id = $(this).val();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type : 'POST',
+            url  : '/getsubcategory',
+            data :{'category_id':category_id},
+            success: function(data){
+                $('#subcategory_list').html(data);
+            }
+        });
+    })
+
+
+    
+
 </script>
 @endsection
