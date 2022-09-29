@@ -10,7 +10,7 @@
                     ADD PRODUCTS
                 </div>
                 <form action="{{ route('product_store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+                    @csrf
                     <div class="card-body">
                         <div class="row">
                             {{-- Category --}}
@@ -32,7 +32,7 @@
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Product Sub-Category</label>
-                                    <select id="subcategory_list" class="form-control" name="" id="">
+                                    <select id="subcategory_list" class="form-control" name="subcategory_id" id="">
                                         <option value="">-- Select Sub-Category --</option>
                                     </select>
                                 </div>
@@ -61,14 +61,14 @@
                             <div class="col-lg-3">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Product Discount</label>
-                                    <input id="product_discount" type="text" class="form-control" placeholder="0%">
+                                    <input name="product_discount" id="product_discount" type="text" class="form-control" placeholder="0%">
                                 </div>
                             </div>
                             {{-- Discount Price --}}
                             <div class="col-lg-3">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Discount Price</label>
-                                    <input readonly id="discount_price" type="text" class="form-control">
+                                    <input readonly id="discount_price" type="text" class="form-control" value="No Discount">
                                 </div>
                             </div>
                             {{-- Short Desp --}}
@@ -110,13 +110,22 @@
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Product Image Thumbnails <span class="text-primary">(Only 4 Thumbnail Can be Added)</span></label>
-                                    <input type="file" class="form-control">
+                                    <input id="product_thumbnail" multiple name="product_thumbnail[]" type="file" class="form-control">
+                                    <strong id="Thumbnail_error" class="text-danger"></strong>
+                                    @if (session('error'))
+                                        <strong class="text-danger">{{ session('error') }}</strong>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer text-center">
-                        <button class="btn btn-primary">SUBMIT</button>
+                    <style>
+                        .display-none{
+                            display: none;
+                        }
+                    </style>
+                    <div id="cardfooter" class="card-footer text-center">
+                        <button id="submit" class="btn btn-primary">SUBMIT</button>
                     </div>
                 </form>
             </div>
@@ -174,9 +183,40 @@
             }
         });
     })
-
-
-    
-
 </script>
+
+@if (session('success'))
+<script>
+    const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  
+  Toast.fire({
+    icon: 'success',
+    title: '{{ session('success') }}',
+  })
+</script>
+@endif
+
+<script>
+    $("#product_thumbnail").on('change',function(){
+        if ($("#product_thumbnail")[0].files.length > 4) {
+            $('#Thumbnail_error').html('You can select only 4 images!');
+            $('#cardfooter').attr('class','display-none');
+        }
+        else{
+            $('#cardfooter').attr('class','card-footer text-center');
+            $('#Thumbnail_error').html('');
+        }
+    }); 
+</script>
+
 @endsection

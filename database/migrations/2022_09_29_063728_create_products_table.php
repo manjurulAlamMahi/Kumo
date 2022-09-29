@@ -23,12 +23,13 @@ class CreateProductsTable extends Migration
             $table->integer('discount_price');
             $table->text('short_desp');
             $table->longText('long_desp');
-            $table->string('product_preview');
+            $table->string('product_preview')->nullable();
             $table->string('review')->nullable();
             $table->integer('star')->nullable();
             $table->string('slug')->unique();
             $table->string('sku')->unique();
             $table->integer('created_by');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
