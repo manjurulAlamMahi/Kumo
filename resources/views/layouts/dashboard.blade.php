@@ -451,7 +451,7 @@
 
                         {{-- Side Menu Title --}}
                         <li>
-                            <a href="">
+                            <a href="{{ route('product_list') }}">
                                 <i class="mdi mdi-layers-outline"></i>
                                 <span>Product's List</span>
                             </a>

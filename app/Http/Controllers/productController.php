@@ -147,4 +147,20 @@ class productController extends Controller
             }
         }
     }
+
+    function product_list()
+    {
+        $products = product::all();
+        return view('admin.products.products_list',[
+            'products' => $products,
+        ]);
+    }
+
+    function product_details($product_slug)
+    {
+        $products = product::where('slug',$product_slug)->get();
+        return view('admin.products.product_details',[
+            'products' => $products,
+        ]);
+    }
 }

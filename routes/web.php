@@ -52,6 +52,8 @@ Route::post('/subcategory/mark/delete', [App\Http\Controllers\subCategoryControl
 Route::get('/product/add', [App\Http\Controllers\productController::class, 'product_add'])->name('product_add');
 Route::post('/getsubcategory', [App\Http\Controllers\productController::class, 'getsubcategory'])->name('getsubcategory');
 Route::post('/product/store', [App\Http\Controllers\productController::class, 'product_store'])->name('product_store');
+Route::get('/product/list', [App\Http\Controllers\productController::class, 'product_list'])->name('product_list');
+Route::get('/product/details/{product_slug}', [App\Http\Controllers\productController::class, 'product_details'])->name('product_details');
 
 // Dashboard Routes End ##########################
 
