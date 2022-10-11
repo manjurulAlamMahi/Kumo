@@ -11,24 +11,49 @@
                 </div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        {{-- Product Image --}}
+                        {{-- ProductImage --}}
                         <div class="col-lg-6">
-                            <div class="product_image">
-                                <img class="w-100 image-fluid" src="{{ asset('frontend/assets/img/product/previews') }}/{{ $products->first()->product_preview }}" alt="">
+                            <div class="product_image_slider mb-2">
+                                <div class="product_image_item">
+                                    <img class="w-100 image-fluid" src="{{ asset('frontend/assets/img/product/previews') }}/{{ $products->first()->product_preview }}" alt="">
+                                </div>
+                                @foreach ($thumb as $thumbnails_preview)
+                                <div class="product_image_item">
+                                    <img class="w-100 image-fluid" src="{{ asset('frontend/assets/img/product/thumbnails') }}/{{ $thumbnails_preview->product_thumbnail }}" alt="">
+                                </div>
+                                @endforeach
+                            </div>
+                            <div class="edit_buttton">
+                                <a href="#" class="btn btn-dark">EDIT IMAGES <i class="fas fa-pencil"></i></a>
                             </div>
                         </div>
+                        <style>
+                            .Product_image_nav .slick-current{
+                                border: 3px solid #35b8e0;
+                            }
+                        </style>
                         {{-- Product Content --}}
                         <div class="col-lg-6">
+                            <div class="row mb-2 Product_image_nav">
+                                <div style="margin: 0 5px; cursor:pointer;" class="col">
+                                    <img class="w-100 image-fluid" src="{{ asset('frontend/assets/img/product/previews') }}/{{ $products->first()->product_preview }}" alt="">
+                                </div>
+                                @foreach ($thumb as $thumbnails)
+                                <div style="margin: 0 5px; cursor:pointer;" class="col">
+                                    <img class="w-100 image-fluid" src="{{ asset('frontend/assets/img/product/thumbnails') }}/{{ $thumbnails->product_thumbnail }}" alt="">
+                                </div>
+                                @endforeach
+                            </div>
                             <div class="mb-2">
                                 <label for="" class="form-label">Product Name : 
                                     <span class="text-info" >{{ $products->first()->product_name }}</span> 
-                                    <a href="#" style="margin-left: 5px;" class="text-dark"><i class="fas fa-pencil"></i></a>
+                                    <a href="{{ route('product_edit_name', $products->first()->id) }}" style="margin-left: 5px;" class="text-dark"><i class="fas fa-pencil"></i></a>
                                 <label>
                             </div>
                             <div class="mb-2">
                                 <label for="" class="form-label">Product Category : 
                                     <span class="text-info" >{{ $products->first()->rel_to_category->category_name }}</span> 
-                                    <a href="#" style="margin-left: 5px;" class="text-dark"><i class="fas fa-pencil"></i></a>
+                                    <a href="{{ route('product_edit_category', $products->first()->id) }}" style="margin-left: 5px;" class="text-dark"><i class="fas fa-pencil"></i></a>
                                 <label>
                             </div>
                             <div class="mb-2">
@@ -84,10 +109,41 @@
                         <div class="mb-2 text-info">
                             {!! $products->first()->long_desp !!}
                         </div>
+                        <div class="mb-2">
+                            <a href="#" class="btn btn-dark">Edit long description <i class="fas fa-pencil"></i></a></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('footer_script')
+    <script>
+        $(document).ready(function(){
+            $('.product_image_slider').slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: false,
+                fade: true,
+                asNavFor: '.Product_image_nav',
+                nextArrow: '<i class="fas fa-chevron-circle-right food_next"></i>',
+                prevArrow: '<i class="fas fa-chevron-circle-left food_prev"></i>',
+                draggable : false,
+            });
+            $('.Product_image_nav').slick({
+                slidesToShow: 5,
+                slidesToScroll: 1,
+                asNavFor: '.product_image_slider',
+                dots: false,
+                centerMode: false,
+                focusOnSelect: true,
+                arrows: false,
+                draggable: false,
+            });
+        });
+         
+    </script>
 @endsection

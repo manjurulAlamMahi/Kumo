@@ -29,8 +29,13 @@
                                 <td class="align-middle"><img width="60" height="60" src="{{ asset('frontend/assets/img/product/previews') }}/{{ $product->product_preview }}" alt="1"></td>
                                 <td class="align-middle">{{ $product->product_name }}</td>
                                 <td class="align-middle">{{ $product->rel_to_category->category_name }}</td>
-                                <td class="align-middle"><del>{{ $product->product_price }}</del><span>{{ $product->discount_price }}</span></td>
-                                <td class="align-middle">{{ $product->product_discount }}%</td>
+                                <td class="align-middle">
+                                    @if ($product->product_discount != null)
+                                        <del>{{ $product->product_price }}</del>
+                                    @endif
+                                    <span>{{ $product->discount_price }}</span>
+                                </td>
+                                <td class="align-middle">{{ ($product->product_discount == null?"No discount":$product->product_discount."%") }}</td>
                                 <td class="align-middle">{{ $product->sku }}</td>
                                 <td class="text-center">
                                     <a href="{{ route('product_details', $product->slug) }}" class="btn btn-primary mb-2">VIEW DETAILS</a>

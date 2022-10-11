@@ -68,7 +68,7 @@ class productController extends Controller
                 'short_desp' => $request->short_desp,
                 'long_desp' => $request->long_desp,
                 'slug' => Str::lower($category_name) . '-' . str_replace(' ', '-', Str::lower($request->product_name)). rand(0, 100),
-                'sku' => substr($request->product_name, 0, 6) . '-' . substr(Uniqid(),0,6),
+                'sku' => substr($request->product_name, 0, 5) .'-'. substr(Uniqid(),0,6),
                 'created_by' => Auth::id(),
                 'created_at' => Carbon::now(),
             ]);
@@ -159,8 +159,31 @@ class productController extends Controller
     function product_details($product_slug)
     {
         $products = product::where('slug',$product_slug)->get();
+        $thumb = thumbnail::where('product_id',$products->first()->id)->get();
         return view('admin.products.product_details',[
             'products' => $products,
+            'thumb' => $thumb,
+        ]);
+    }
+
+    function product_edit_name($product_id)
+    {
+        $product_information = product::find($product_id)->get();
+        $edit_type = 1;
+        return view('admin.products.product_edit',[
+            'product_information' => $product_information,
+            'edit_type' => $edit_type,
+        ]);
+    }
+    function product_edit_category($product_id)
+    {
+        $product_information = product::find($product_id)->get();
+        $category = category::all();
+        $edit_type = 2;
+        return view('admin.products.product_edit',[
+            'product_information' => $product_information,
+            'edit_type' => $edit_type,
+            'category' => $category,
         ]);
     }
 }
