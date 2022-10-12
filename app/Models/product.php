@@ -22,6 +22,7 @@ class product extends Model
     {
         return $this->belongsTo(category::class, 'category_id');
     }
+    
     function rel_to_subcategory()
     {
         return $this->belongsTo(subcategory::class, 'subcategory_id');

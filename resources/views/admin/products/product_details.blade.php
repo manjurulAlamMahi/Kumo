@@ -24,7 +24,7 @@
                                 @endforeach
                             </div>
                             <div class="edit_buttton">
-                                <a href="#" class="btn btn-dark">EDIT IMAGES <i class="fas fa-pencil"></i></a>
+                                <a href="{{ route('product_image_list' , $products->first()->id) }}" class="btn btn-dark">EDIT IMAGES <i class="fas fa-pencil"></i></a>
                             </div>
                         </div>
                         <style>
@@ -34,7 +34,10 @@
                         </style>
                         {{-- Product Content --}}
                         <div class="col-lg-6">
-                            <div class="row mb-2 Product_image_nav">
+                            <div class="title mb-3">
+                                <h4 style="font-weight: 700; font-size:20px;" class="text-primary">Product Thumbnails --</h4>
+                            </div>
+                            <div class="row mb-3 Product_image_nav">
                                 <div style="margin: 0 5px; cursor:pointer;" class="col">
                                     <img class="w-100 image-fluid" src="{{ asset('frontend/assets/img/product/previews') }}/{{ $products->first()->product_preview }}" alt="">
                                 </div>
@@ -43,6 +46,9 @@
                                     <img class="w-100 image-fluid" src="{{ asset('frontend/assets/img/product/thumbnails') }}/{{ $thumbnails->product_thumbnail }}" alt="">
                                 </div>
                                 @endforeach
+                            </div>
+                            <div class="title mb-3">
+                                <h4 style="font-weight: 700; font-size:20px;" class="text-primary">Product Information --</h4>
                             </div>
                             <div class="mb-2">
                                 <label for="" class="form-label">Product Name : 
@@ -59,7 +65,7 @@
                             <div class="mb-2">
                                 <label for="" class="form-label">Product Sub-Category : 
                                     <span class="text-info" >{{ ($products->first()->subcategory_id == null?"N/A":$products->first()->rel_to_subcategory->subcategory_name) }}</span> 
-                                    <a href="#" style="margin-left: 5px;" class="text-dark"><i class="fas fa-pencil"></i></a>
+                                    <a href="{{ route('product_edit_subcategory', $products->first()->id) }}" style="margin-left: 5px;" class="text-dark"><i class="fas fa-pencil"></i></a>
                                 <label>
                             </div>
                             <div class="mb-2">
@@ -92,12 +98,12 @@
                                     @else
                                         <span class="text-info" >{{ $products->first()->discount_price }}</span> 
                                     @endif
-                                    <a href="#" style="margin-left: 5px;" class="text-dark"><i class="fas fa-pencil"></i></a>
+                                    <a href="{{ route('product_edit_price', $products->first()->id) }}" style="margin-left: 5px;" class="text-dark"><i class="fas fa-pencil"></i></a>
                                 <label>
                             </div>
                             <div class="mb-2">
                                 <label for="" class="form-label">Short Desciption : <label>
-                                <p class="text-info">{{ $products->first()->short_desp }}<a href="#" style="margin-left: 5px;" class="text-dark"><i class="fas fa-pencil"></i></a></p>
+                                <p class="text-info">{{ $products->first()->short_desp }}<a href="{{ route('product_edit_short_desp', $products->first()->id) }}" style="margin-left: 5px;" class="text-dark"><i class="fas fa-pencil"></i></a></p>
                             </div>
                         </div>
                     </div>
@@ -110,7 +116,7 @@
                             {!! $products->first()->long_desp !!}
                         </div>
                         <div class="mb-2">
-                            <a href="#" class="btn btn-dark">Edit long description <i class="fas fa-pencil"></i></a></a>
+                            <a href="{{ route('product_edit_long_desp', $products->first()->id) }}" class="btn btn-dark">Edit long description <i class="fas fa-pencil"></i></a></a>
                         </div>
                     </div>
                 </div>

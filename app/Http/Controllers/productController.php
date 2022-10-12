@@ -168,7 +168,7 @@ class productController extends Controller
 
     function product_edit_name($product_id)
     {
-        $product_information = product::find($product_id)->get();
+        $product_information = product::find($product_id);
         $edit_type = 1;
         return view('admin.products.product_edit',[
             'product_information' => $product_information,
@@ -177,13 +177,62 @@ class productController extends Controller
     }
     function product_edit_category($product_id)
     {
-        $product_information = product::find($product_id)->get();
+        $product_information = product::find($product_id);
         $category = category::all();
         $edit_type = 2;
         return view('admin.products.product_edit',[
             'product_information' => $product_information,
             'edit_type' => $edit_type,
             'category' => $category,
+        ]);
+    }
+    function product_edit_subcategory($product_id)
+    {
+        $product_information = product::find($product_id);
+        $category_id = product::find($product_id)->category_id;
+        $subcategory = subcategory::where('category_id', $category_id)->get();
+        $edit_type = 3;
+        return view('admin.products.product_edit',[
+            'product_information' => $product_information,
+            'edit_type' => $edit_type,
+            'subcategory' => $subcategory,
+        ]);
+    }
+    function product_edit_price($product_id)
+    {
+        $product_information = product::find($product_id);
+        $edit_type = 4;
+        return view('admin.products.product_edit',[
+            'product_information' => $product_information,
+            'edit_type' => $edit_type,
+        ]);
+    }
+    function product_edit_short_desp($product_id)
+    {
+        $product_information = product::find($product_id);
+        $edit_type = 5;
+        return view('admin.products.product_edit',[
+            'product_information' => $product_information,
+            'edit_type' => $edit_type,
+        ]);
+    }
+    function product_edit_long_desp($product_id)
+    {
+        $product_information = product::find($product_id);
+        $edit_type = 6;
+        return view('admin.products.product_edit',[
+            'product_information' => $product_information,
+            'edit_type' => $edit_type,
+        ]);
+    }
+
+    function product_image_list($product_id)
+    {
+        $product_information = product::find($product_id);
+        $product_thumbnails = thumbnail::where('product_id', $product_id)->get();
+        return view('admin.products.product_images_list',[
+            'product_information' => $product_information,
+            'product_thumbnails' => $product_thumbnails,
         ]);
     }
 }

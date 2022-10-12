@@ -56,6 +56,11 @@ Route::get('/product/list', [App\Http\Controllers\productController::class, 'pro
 Route::get('/product/details/{product_slug}', [App\Http\Controllers\productController::class, 'product_details'])->name('product_details');
 Route::get('/product/edit/name/{product_id}', [App\Http\Controllers\productController::class, 'product_edit_name'])->name('product_edit_name');
 Route::get('/product/edit/category/{product_id}', [App\Http\Controllers\productController::class, 'product_edit_category'])->name('product_edit_category');
+Route::get('/product/edit/subcategory/{product_id}', [App\Http\Controllers\productController::class, 'product_edit_subcategory'])->name('product_edit_subcategory');
+Route::get('/product/edit/price/{product_id}', [App\Http\Controllers\productController::class, 'product_edit_price'])->name('product_edit_price');
+Route::get('/product/edit/short/desp/{product_id}', [App\Http\Controllers\productController::class, 'product_edit_short_desp'])->name('product_edit_short_desp');
+Route::get('/product/edit/long/desp/{product_id}', [App\Http\Controllers\productController::class, 'product_edit_long_desp'])->name('product_edit_long_desp');
+Route::get('/product/images/list/{product_id}', [App\Http\Controllers\productController::class, 'product_image_list'])->name('product_image_list');
 
 // Dashboard Routes End ##########################
 
