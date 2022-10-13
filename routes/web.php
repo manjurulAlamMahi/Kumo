@@ -60,7 +60,11 @@ Route::get('/product/edit/subcategory/{product_id}', [App\Http\Controllers\produ
 Route::get('/product/edit/price/{product_id}', [App\Http\Controllers\productController::class, 'product_edit_price'])->name('product_edit_price');
 Route::get('/product/edit/short/desp/{product_id}', [App\Http\Controllers\productController::class, 'product_edit_short_desp'])->name('product_edit_short_desp');
 Route::get('/product/edit/long/desp/{product_id}', [App\Http\Controllers\productController::class, 'product_edit_long_desp'])->name('product_edit_long_desp');
+Route::get('/product/edit/preview/{product_id}', [App\Http\Controllers\productController::class, 'product_edit_preview'])->name('product_edit_preview');
 Route::get('/product/images/list/{product_id}', [App\Http\Controllers\productController::class, 'product_image_list'])->name('product_image_list');
+Route::post('/product/update', [App\Http\Controllers\productController::class, 'product_update'])->name('product_update');
+Route::post('/product/insert/thumbnail', [App\Http\Controllers\productController::class, 'insert_new_thumbnail'])->name('insert_new_thumbnail');
+Route::get('/product/remove/thumbnail/{thumbnail_id}', [App\Http\Controllers\productController::class, 'remove_thumbnail'])->name('remove_thumbnail');
 
 // Dashboard Routes End ##########################
 
