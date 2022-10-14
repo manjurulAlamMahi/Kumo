@@ -20,6 +20,14 @@
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     {{-- SummerNote --}}
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    @if (Route::currentRouteName() == 'inventory_color')
+    <!-- Plugins css -->
+    <link href="{{ asset('/dashboard/assets/libs/spectrum-colorpicker2/spectrum.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('/dashboard/assets/libs/flatpickr/flatpickr.min.css" rel="stylesheet') }}" type="text/css" />
+    <link href="{{ asset('/dashboard/assets/libs/clockpicker/bootstrap-clockpicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/dashboard/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/dashboard/assets/libs/bootstrap-datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+    @endif
 </head>
 
 <!-- body start -->
@@ -479,10 +487,10 @@
                             <div class="collapse" id="Inventory">
                                 <ul class="nav-second-level">
                                     <li>
-                                        <a href="email-inbox.html">Color's List</a>
+                                        <a href="{{ route('inventory_color') }}">Color's List</a>
                                     </li>
                                     <li>
-                                        <a href="email-templates.html">Size's List</a>
+                                        <a href="{{ route('inventory_size') }}">Size's List</a>
                                     </li>
                                 </ul>
                             </div>
@@ -715,6 +723,18 @@
     <script src="{{ asset('/dashboard/assets/libs/waypoints/lib/jquery.waypoints.min.js') }}"></script>
     <script src="{{ asset('/dashboard/assets/libs/jquery.counterup/jquery.counterup.min.js') }}"></script>
     <script src="{{ asset('/dashboard/assets/libs/feather-icons/feather.min.js') }}"></script>
+
+    @if (Route::currentRouteName() == 'inventory_color')
+        <!-- Plugins js-->
+        <script src="{{ asset('/dashboard/assets/libs/flatpickr/flatpickr.min.js') }}"></script>
+        <script src="{{ asset('/dashboard/assets/libs/spectrum-colorpicker2/spectrum.min.js') }}"></script>
+        <script src="{{ asset('/dashboard/assets/libs/clockpicker/bootstrap-clockpicker.min.js') }}"></script>
+        <script src="{{ asset('/dashboard/assets/libs/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+
+        <!-- Init js-->
+        <script src="{{ asset('/dashboard/assets/js/pages/form-pickers.init.js') }}"></script>
+    @endif
+
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://kit.fontawesome.com/2023654590.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>

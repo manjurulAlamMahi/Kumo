@@ -87,7 +87,7 @@
                             </div>
                             <div class="mb-2">
                                 <label for="" class="form-label">Product Discount : 
-                                    <span class="text-info" >{{ ($products->first()->product_discount == null?"No discount":$products->first()->product_discount) }}%</span>
+                                    <span class="text-info" >{{ ($products->first()->product_discount == null?"No discount":$products->first()->product_discount."%" ) }}</span>
                                 <label>
                             </div>
                             <div class="mb-2">
