@@ -40,7 +40,7 @@
                                 <td class="text-center">
                                     <a href="{{ route('product_details', $product->slug) }}" class="btn btn-primary mb-2">VIEW DETAILS</a>
                                     <br>
-                                    <a href="#" class="btn btn-danger mb-2">INVENTORY</a>
+                                    <a href="{{ route('product_inventory', $product->slug) }}" class="btn btn-danger mb-2">INVENTORY</a>
                                     <br>
                                     <a href="#" class="btn btn-success">ACTIVE</a>
                                 </td>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInventorySizesTable extends Migration
+class CreateInventorySizeTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateInventorySizesTable extends Migration
      */
     public function up()
     {
-        Schema::create('inventory_sizes', function (Blueprint $table) {
+        Schema::create('inventory_size_types', function (Blueprint $table) {
             $table->id();
             $table->string('size_type');
-            $table->string('size_name');
-            $table->timestamps();
         });
     }
 
@@ -28,6 +26,6 @@ class CreateInventorySizesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inventory_sizes');
+        Schema::dropIfExists('inventory_size_types');
     }
 }
