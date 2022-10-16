@@ -76,6 +76,9 @@ Route::post('/inventory/add/size/type', [App\Http\Controllers\inventoryControlle
 Route::get('/inventory/remove/size/type/{szt_id}', [App\Http\Controllers\inventoryController::class, 'remove_size_type'])->name('remove_size_type');
 Route::get('/inventory/size/remove/{size_id}', [App\Http\Controllers\inventoryController::class, 'remove_ineventory_size'])->name('remove_ineventory_size');
 Route::get('/product/inventory/{product_slug}', [App\Http\Controllers\inventoryController::class, 'product_inventory'])->name('product_inventory');
+Route::post('/getsizeinventory', [App\Http\Controllers\inventoryController::class, 'getsizeinventory'])->name('getsizeinventory');
+Route::post('/store/inventory', [App\Http\Controllers\inventoryController::class, 'store_inventory'])->name('store_inventory');
+Route::get('/remove/inventory/{inventory_id}', [App\Http\Controllers\inventoryController::class, 'remove_product_inventory'])->name('remove_product_inventory');
 
 // Dashboard Routes End ##########################
 
