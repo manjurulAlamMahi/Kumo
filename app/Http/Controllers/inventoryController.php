@@ -198,4 +198,12 @@ class inventoryController extends Controller
         productInventory::find($inventory_id)->delete();
         return back()->with('success' , 'Deleted');
     }
+    // ################### Inventory List
+    function inventory_lists()
+    {
+        $products = product::all();
+        return view('admin.inventory.product_inventory_list',[
+            'products' => $products,
+        ]);
+    }
 }

@@ -65,6 +65,7 @@ Route::get('/product/images/list/{product_id}', [App\Http\Controllers\productCon
 Route::post('/product/update', [App\Http\Controllers\productController::class, 'product_update'])->name('product_update');
 Route::post('/product/insert/thumbnail', [App\Http\Controllers\productController::class, 'insert_new_thumbnail'])->name('insert_new_thumbnail');
 Route::get('/product/remove/thumbnail/{thumbnail_id}', [App\Http\Controllers\productController::class, 'remove_thumbnail'])->name('remove_thumbnail');
+Route::get('/product/active/deactive/{product_id}', [App\Http\Controllers\productController::class, 'product_active_deactive'])->name('product_active_deactive');
 
 // Inventory Routes Start
 Route::get('/inventory/colors', [App\Http\Controllers\inventoryController::class, 'inventory_color'])->name('inventory_color');
@@ -79,6 +80,7 @@ Route::get('/product/inventory/{product_slug}', [App\Http\Controllers\inventoryC
 Route::post('/getsizeinventory', [App\Http\Controllers\inventoryController::class, 'getsizeinventory'])->name('getsizeinventory');
 Route::post('/store/inventory', [App\Http\Controllers\inventoryController::class, 'store_inventory'])->name('store_inventory');
 Route::get('/remove/inventory/{inventory_id}', [App\Http\Controllers\inventoryController::class, 'remove_product_inventory'])->name('remove_product_inventory');
+Route::get('/inventory/list', [App\Http\Controllers\inventoryController::class, 'inventory_lists'])->name('inventory_lists');
 
 // Dashboard Routes End ##########################
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\category;
 use App\Models\product;
+use App\Models\productInventory;
 use App\Models\subcategory;
 use App\Models\thumbnail;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use Image;
 
 class productController extends Controller
 {
+    // ############## ADD PRODUCT VIEW
     function product_add()
     {
         $catrgories = category::all();
@@ -23,7 +25,7 @@ class productController extends Controller
             'subcategories' => $subcategories,
         ]);
     }
-
+    // ############## GET SUBCATEGORY FOR PRODUCT
     function getsubcategory(Request $request)
     {
         $subcategories = subcategory::where('category_id', $request->category_id)->get();
@@ -33,7 +35,7 @@ class productController extends Controller
         }
         echo $str;
     }
-
+    // ##############  PRODUCT STORE 
     function product_store(Request $request)
     {
         $request->validate([
@@ -147,15 +149,69 @@ class productController extends Controller
             }
         }
     }
-
-    function product_list()
+    // ##############  PRODUCT LIST VIEW 
+    function product_list(Request $request)
     {
-        $products = product::all();
-        return view('admin.products.products_list',[
-            'products' => $products,
-        ]);
-    }
+        $data = $request->all();
+        $inventory = productInventory::groupBy('product_id')
+        ->selectRaw('product_id')
+        ->orderBy('product_id', 'ASC')
+        ->get();
+        $category = category::all();
 
+        
+        return product::find($inventory->first()->product_id);
+
+        die();
+        // if($data['s'] == 'invt')
+        // {
+        //     $products = 
+        // }
+        // else
+        // {
+        //     $products = product::where(function($search) use ($data){
+        //         if(!empty($data['q']) && $data['q'] != '' && $data['q'] != "undefined")
+        //         {
+        //             $search->where(function($search) use ($data){
+        //                 $search->where('product_name', 'like', '%'.$data['q'].'%');
+        //             });
+        //         }
+        //         if(!empty($data['c']) && $data['c'] != '' && $data['c'] != "undefined")
+        //         {
+        //             $search->where(function($search) use ($data){
+        //                 $search->where('category_id', $data['c']);
+        //             });
+        //         }
+        //         if(!empty($data['s']) && $data['s'] != '' && $data['s'] != "undefined")
+        //         {
+        //             if($data['s'] == "act")
+        //             {
+        //                 $search->where(function($search) use ($data){
+        //                     $search->where('status', '!=' , 0);
+        //                 });
+        //             }
+        //             else if($data['s'] == "dct")
+        //             {
+        //                 $search->where(function($search) use ($data){
+        //                     $search->where('status', '==' , 0);
+        //                 });
+        //             }
+        //         }
+        //         if(!empty($data['d']) && $data['d'] != '' && $data['d'] != "undefined")
+        //         {
+        //             $search->where(function($search) use ($data){
+        //                 $search->whereDate('created_at', $data['d']);
+        //             });
+        //         }
+        //     });
+        // }
+        
+        // return view('admin.products.products_list',[
+        //     'products' => $products->paginate(10),
+        //     'category' => $category,
+        // ]);
+    }
+    // ##############  PRODUCT DETAILS 
     function product_details($product_slug)
     {
         $products = product::where('slug',$product_slug)->get();
@@ -165,7 +221,7 @@ class productController extends Controller
             'thumb' => $thumb,
         ]);
     }
-
+    // ##############  PRODUCT EDIT START ########################################
     function product_edit_name($product_id)
     {
         $product_information = product::find($product_id);
@@ -234,17 +290,20 @@ class productController extends Controller
             'edit_type' => $edit_type,
         ]);
     }
+    // ##############  PRODUCT EDIT END  ########################################
 
+    // ##############  PRODUCT IMAGE LIST
     function product_image_list($product_id)
     {
         $product_information = product::find($product_id);
         $product_thumbnails = thumbnail::where('product_id', $product_id)->get();
+
         return view('admin.products.product_images_list',[
             'product_information' => $product_information,
             'product_thumbnails' => $product_thumbnails,
         ]);
     }
-
+    // ##############  PRODUCT Inert Thumbnails IMAGE
     function insert_new_thumbnail(Request $request)
     {
         $thumbnail = thumbnail::where('product_id', $request->product_id);
@@ -286,7 +345,7 @@ class productController extends Controller
         }
         
     }
-
+    // ##############  PRODUCT remove Thumbnails IMAGE
     function remove_thumbnail($thumbnail_id)
     {
         $thumbnail = thumbnail::find($thumbnail_id);
@@ -297,7 +356,7 @@ class productController extends Controller
 
         return back()->with('success', 'Thumbnail deleted successfully!');
     }
-
+    // ##############  PRODUCT UPDATE
     function product_update(Request $request)
     {
         $edit_type =  $request->edit_type;
@@ -437,5 +496,24 @@ class productController extends Controller
         }
         
 
+    }
+    function product_active_deactive($product_id)
+    {
+        if(product::find($product_id)->status == 0)
+        {
+            product::find($product_id)->update([
+                'status' => 1,
+            ]);
+
+            return back()->with('success', "Product Activated");
+        }
+        else
+        {
+            product::find($product_id)->update([
+                'status' => 0,
+            ]);
+
+            return back()->with('success', "Product Deactivated");
+        }
     }
 }

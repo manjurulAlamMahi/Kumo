@@ -467,7 +467,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="apps-chat.html">
+                            <a href="{{ route('inventory_lists') }}">
                                 <i class="mdi mdi-briefcase-outline"></i>
                                 <span>Product's Inventory</span>
                             </a>

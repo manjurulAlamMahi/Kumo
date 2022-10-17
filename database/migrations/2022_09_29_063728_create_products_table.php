@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->text('short_desp');
             $table->longText('long_desp');
             $table->string('product_preview')->nullable();
+            $table->tinyInteger('status')->default('0');
             $table->string('review')->nullable();
             $table->integer('star')->nullable();
             $table->string('slug')->unique();
