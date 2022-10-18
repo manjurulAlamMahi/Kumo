@@ -159,57 +159,46 @@ class productController extends Controller
         ->get();
         $category = category::all();
 
+        $products = product::where(function($search) use ($data){
+            if(!empty($data['q']) && $data['q'] != '' && $data['q'] != "undefined")
+            {
+                $search->where(function($search) use ($data){
+                    $search->where('product_name', 'like', '%'.$data['q'].'%');
+                });
+            }
+            if(!empty($data['c']) && $data['c'] != '' && $data['c'] != "undefined")
+            {
+                $search->where(function($search) use ($data){
+                    $search->where('category_id', $data['c']);
+                });
+            }
+            if(!empty($data['s']) && $data['s'] != '' && $data['s'] != "undefined")
+            {
+                if($data['s'] == "act")
+                {
+                    $search->where(function($search) use ($data){
+                        $search->where('status', '!=' , 0);
+                    });
+                }
+                else if($data['s'] == "dct")
+                {
+                    $search->where(function($search) use ($data){
+                        $search->where('status', '==' , 0);
+                    });
+                }
+            }
+            if(!empty($data['d']) && $data['d'] != '' && $data['d'] != "undefined")
+            {
+                $search->where(function($search) use ($data){
+                    $search->whereDate('created_at', $data['d']);
+                });
+            }
+        });
         
-        return product::find($inventory->first()->product_id);
-
-        die();
-        // if($data['s'] == 'invt')
-        // {
-        //     $products = 
-        // }
-        // else
-        // {
-        //     $products = product::where(function($search) use ($data){
-        //         if(!empty($data['q']) && $data['q'] != '' && $data['q'] != "undefined")
-        //         {
-        //             $search->where(function($search) use ($data){
-        //                 $search->where('product_name', 'like', '%'.$data['q'].'%');
-        //             });
-        //         }
-        //         if(!empty($data['c']) && $data['c'] != '' && $data['c'] != "undefined")
-        //         {
-        //             $search->where(function($search) use ($data){
-        //                 $search->where('category_id', $data['c']);
-        //             });
-        //         }
-        //         if(!empty($data['s']) && $data['s'] != '' && $data['s'] != "undefined")
-        //         {
-        //             if($data['s'] == "act")
-        //             {
-        //                 $search->where(function($search) use ($data){
-        //                     $search->where('status', '!=' , 0);
-        //                 });
-        //             }
-        //             else if($data['s'] == "dct")
-        //             {
-        //                 $search->where(function($search) use ($data){
-        //                     $search->where('status', '==' , 0);
-        //                 });
-        //             }
-        //         }
-        //         if(!empty($data['d']) && $data['d'] != '' && $data['d'] != "undefined")
-        //         {
-        //             $search->where(function($search) use ($data){
-        //                 $search->whereDate('created_at', $data['d']);
-        //             });
-        //         }
-        //     });
-        // }
-        
-        // return view('admin.products.products_list',[
-        //     'products' => $products->paginate(10),
-        //     'category' => $category,
-        // ]);
+        return view('admin.products.products_list',[
+            'products' => $products->paginate(5),
+            'category' => $category,
+        ]);
     }
     // ##############  PRODUCT DETAILS 
     function product_details($product_slug)

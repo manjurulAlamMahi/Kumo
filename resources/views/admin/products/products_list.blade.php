@@ -27,7 +27,13 @@
                                     <select class="form-control" name="" id="category_id">
                                         <option value="">-- Select Category --</option>
                                         @foreach ($category as $cate)
-                                            <option value="{{ $cate->id }}">{{ $cate->category_name }}</option>
+                                            <option
+                                            @if (isset($_GET['c']))
+                                                @if ($_GET['c'] == $cate->id)
+                                                    Selected
+                                                @endif
+                                            @endif
+                                            value="{{ $cate->id }}">{{ $cate->category_name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -37,22 +43,40 @@
                                     <label for="" class="form-label">Status</label>
                                     <select class="form-control" name="" id="status_id">
                                         <option value="">-- Select Category --</option>
-                                        <option value="act">Active</option>
-                                        <option value="dct">Deactive</option>
-                                        <option value="invt">Not Added On Inventory</option>
+                                        <option
+                                        @if (isset($_GET['s']))
+                                            @if ($_GET['s'] == 'act')
+                                                Selected
+                                            @endif
+                                        @endif
+                                        value="act">Active</option>
+                                        <option
+                                        @if (isset($_GET['s']))
+                                            @if ($_GET['s'] == 'dct')
+                                                Selected
+                                            @endif
+                                        @endif 
+                                        value="dct">Deactive</option>
+                                        <option
+                                        @if (isset($_GET['s']))
+                                            @if ($_GET['s'] == 'invt')
+                                                Selected
+                                            @endif
+                                        @endif 
+                                        value="invt">Not Added On Inventory</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-3">
                                 <label for="example-date" class="form-label">Date</label>
-                                <input class="form-control" id="example-date" type="date" name="date">
+                                <input class="form-control" id="example-date" type="date" name="date" value="{{ (isset($_GET['d'])?$_GET['d']:"") }}">
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
                                     <label class="form-label">Search</label>
                                 </div>
                                 <div class="input-group app-search-box">
-                                    <input type="text" class="form-control" placeholder="Search Product..." id="search" value="">
+                                    <input type="text" class="form-control" placeholder="Search Product..." id="search" value="{{ (isset($_GET['q'])?$_GET['q']:"") }}">
                                     <button class="btn input-group-text" id="serach_btn" type="submit">
                                         <i class="fe-search"></i>
                                     </button>
@@ -83,47 +107,91 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if (isset($_GET['s']) && $_GET['s'] == 'invt')
                             @forelse ($products as $key => $product)
-                            <tr>
-                                <td class="align-middle">{{ $key+1 }}</td>
-                                <td class="align-middle"><img width="60" height="60" src="{{ asset('frontend/assets/img/product/previews') }}/{{ $product->product_preview }}" alt="1"></td>
-                                <td class="align-middle">{{ $product->product_name }}</td>
-                                <td class="align-middle">{{ $product->rel_to_category->category_name }}</td>
-                                <td class="align-middle">
-                                    @if ($product->product_discount != null)
-                                        <del>{{ $product->product_price }}</del>
-                                    @endif
-                                    <span>{{ $product->discount_price }}</span>
-                                </td>
-                                <td class="align-middle">{{ ($product->product_discount == null?"No discount":$product->product_discount."%") }}</td>
-                                <td class="align-middle">{{ $product->sku }}</td>
-                                <td class="text-center">
-                                    <a href="{{ route('product_details', $product->slug) }}" class="btn btn-primary mb-2">VIEW DETAILS</a>
-                                    <br>
-                                    <a href="{{ route('product_inventory', $product->slug) }}" class="btn btn-danger mb-2">INVENTORY</a>
-                                    <br>
-                                    @if (App\Models\productInventory::where('product_id' , $product->id)->exists())
-                                        @if (App\Models\productInventory::where('product_id' , $product->id)->sum('quantity') > 0)
-                                            <a href="{{ route('product_active_deactive', $product->id) }}" class="btn {{ ($product->status == 0?'btn-secondary':'btn-success') }}">{{ ($product->status == 0?'Deactive':'Active') }}</a>
+                                @if (App\Models\productInventory::where('product_id' , $product->id)->doesntExist())
+                                <tr>
+                                    <td class="align-middle">{{ $products->firstitem()+$key }}</td>
+                                    <td class="align-middle"><img width="60" height="60" src="{{ asset('frontend/assets/img/product/previews') }}/{{ $product->product_preview }}" alt="1"></td>
+                                    <td class="align-middle">{{ $product->product_name }}</td>
+                                    <td class="align-middle">{{ $product->rel_to_category->category_name }}</td>
+                                    <td class="align-middle">
+                                        @if ($product->product_discount != null)
+                                            <del>{{ $product->product_price }}</del>
+                                        @endif
+                                        <span>{{ $product->discount_price }}</span>
+                                    </td>
+                                    <td class="align-middle">{{ ($product->product_discount == null?"No discount":$product->product_discount."%") }}</td>
+                                    <td class="align-middle">{{ $product->sku }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('product_details', $product->slug) }}" class="btn btn-primary mb-2">VIEW DETAILS</a>
+                                        <br>
+                                        <a href="{{ route('product_inventory', $product->slug) }}" class="btn btn-danger mb-2">INVENTORY</a>
+                                        <br>
+                                        @if (App\Models\productInventory::where('product_id' , $product->id)->exists())
+                                            @if (App\Models\productInventory::where('product_id' , $product->id)->sum('quantity') > 0)
+                                                <a href="{{ route('product_active_deactive', $product->id) }}" class="btn {{ ($product->status == 0?'btn-secondary':'btn-success') }}">{{ ($product->status == 0?'Deactive':'Active') }}</a>
+                                            @else
+                                                <div class="alert alert-success">
+                                                    Stock Out !! <br>(ADD INVENTORY)
+                                                </div>
+                                            @endif
+                                            
                                         @else
-                                            <div class="alert alert-success">
-                                                Stock Out !! <br>(ADD INVENTORY)
+                                            <div class="alert alert-warning">
+                                                (ADD INVENTORY) <br> before activation
                                             </div>
                                         @endif
-                                        
-                                    @else
-                                        <div class="alert alert-warning">
-                                            (ADD INVENTORY) <br> before activation
-                                        </div>
-                                    @endif
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                                @endif
                             @empty
                             <tr>
                                 <td colspan="8">No Data Found</td>
                             </tr>
                             @endforelse
-                            
+                            @else
+                                @forelse ($products as $key => $product)
+                                <tr>
+                                    <td class="align-middle">{{ $key+1 }}</td>
+                                    <td class="align-middle"><img width="60" height="60" src="{{ asset('frontend/assets/img/product/previews') }}/{{ $product->product_preview }}" alt="1"></td>
+                                    <td class="align-middle">{{ $product->product_name }}</td>
+                                    <td class="align-middle">{{ $product->rel_to_category->category_name }}</td>
+                                    <td class="align-middle">
+                                        @if ($product->product_discount != null)
+                                            <del>{{ $product->product_price }}</del>
+                                        @endif
+                                        <span>{{ $product->discount_price }}</span>
+                                    </td>
+                                    <td class="align-middle">{{ ($product->product_discount == null?"No discount":$product->product_discount."%") }}</td>
+                                    <td class="align-middle">{{ $product->sku }}</td>
+                                    <td class="text-center">
+                                        <a href="{{ route('product_details', $product->slug) }}" class="btn btn-primary mb-2">VIEW DETAILS</a>
+                                        <br>
+                                        <a href="{{ route('product_inventory', $product->slug) }}" class="btn btn-danger mb-2">INVENTORY</a>
+                                        <br>
+                                        @if (App\Models\productInventory::where('product_id' , $product->id)->exists())
+                                            @if (App\Models\productInventory::where('product_id' , $product->id)->sum('quantity') > 0)
+                                                <a href="{{ route('product_active_deactive', $product->id) }}" class="btn {{ ($product->status == 0?'btn-secondary':'btn-success') }}">{{ ($product->status == 0?'Deactive':'Active') }}</a>
+                                            @else
+                                                <div class="alert alert-success">
+                                                    Stock Out !! <br>(ADD INVENTORY)
+                                                </div>
+                                            @endif
+                                            
+                                        @else
+                                            <div class="alert alert-warning">
+                                                (ADD INVENTORY) <br> before activation
+                                            </div>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="8">No Data Found</td>
+                                </tr>
+                                @endforelse
+                            @endif
                         </tbody>
                     </table>
                 </div>
